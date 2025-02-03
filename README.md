@@ -1,79 +1,67 @@
-# project Title
+
 # Django Task Manager Application
 
-## Overview
-This is a Django-based Task Manager application with a REST API, built using Django Rest Framework (DRF). The application allows users to create, read, update, and delete tasks.
+A Django-based REST API for managing tasks (create, read, update, delete). This project features a Dockerized setup and a CI/CD pipeline with GitHub Actions.
 
-## Features
-- Create a task with title, description, and status.
-- Retrieve all tasks or a specific task.
-- Update task details.
-- Delete a task.
-- Includes unit tests for API endpoints.
+## Quick Start
 
-## Installation & Setup
+### Using Docker
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-```
+1. **Build the Docker image:**
+   ```bash
+   docker build -t django-task-manager .
+   ```
 
-### 2. Setup Virtual Environment
-```bash
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate    # On Windows
-```
+2. **Run the Docker container:**
+   ```bash
+   docker run -d --name task_manager -p 8000:8000 django-task-manager
+   ```
 
-### 3. Install Dependencies
-```bash
-pip install django djangorestframework
-```
+3. **Run tests inside the container:**
+   ```bash
+   docker exec task_manager python manage.py test
+   ```
 
-### 4. Run Migrations
-```bash
-python manage.py makemigrations
-target_title="Task Manager"
-python manage.py migrate
-```
+4. **Stop and remove the container:**
+   ```bash
+   docker stop task_manager && docker rm task_manager
+   ```
 
-### 5. Run the Server
-```bash
-python manage.py runserver
-```
-- Visit: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+### Local Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
+   cd your-repo
+   ```
+
+2. **Create a virtual environment and install dependencies:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  
+   pip install -r requirements.txt
+   ```
+
+3. **Run migrations and start the server:**
+   ```bash
+   python manage.py migrate
+   python manage.py runserver
+   ```
+   Access the app at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ## API Endpoints
-| Method | Endpoint         | Description         |
-|--------|-----------------|---------------------|
-| GET    | /api/tasks/     | Retrieve all tasks |
-| POST   | /api/tasks/     | Create a new task  |
-| GET    | /api/tasks/{id}/ | Retrieve a task by ID |
-| PUT    | /api/tasks/{id}/ | Update a task |
-| DELETE | /api/tasks/{id}/ | Delete a task |
 
-## Running Tests
-```bash
-python manage.py test
-```
+- **GET** `/api/tasks/` – Retrieve all tasks
+- **POST** `/api/tasks/` – Create a new task
+- **GET** `/api/tasks/{id}/` – Retrieve a specific task by ID
+- **PUT** `/api/tasks/{id}/` – Update a task
+- **DELETE** `/api/tasks/{id}/` – Delete a task
 
-## Contributing
-1. Fork the repository.
-2. Create a new branch (`feature-branch`):
-   ```bash
-   git checkout -b feature-branch
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Added new feature"
-   ```
-4. Push to your branch:
-   ```bash
-   git push origin feature-branch
-   ```
-5. Create a Pull Request.
+## CI/CD Pipeline
+
+A GitHub Actions workflow is configured to automatically build the Docker image, run tests, and clean up containers on pushes and pull requests to the `main` and `akash` branches.
 
 ## License
-This project is licensed under the MIT License.
 
+This project is licensed under the [MIT License](LICENSE).
+```
